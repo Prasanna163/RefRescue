@@ -1,19 +1,26 @@
 {
-  "name": "refrescue-myloft-bridge",
-  "version": "0.1.0",
-  "description": "Read-only bridge between ChatGPT and an already-authenticated MyLOFT Chrome session.",
+  "name": "refrescue-institutional-access",
+  "version": "0.2.0",
+  "description": "A minimal institutional-entitlement gateway for ChatGPT research workflows, with MyLOFT as the first provider.",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node src/server.mjs",
-    "dev": "node --watch src/server.mjs",
+    "start": "node src/server-cloud.mjs",
+    "start:local": "node src/server.mjs",
+    "bootstrap:myloft": "node scripts/bootstrap-steel.mjs",
     "chrome": "node scripts/start-chrome.mjs",
     "token": "node scripts/generate-token.mjs",
     "test": "node --test test/*.test.mjs",
     "check": "npm test"
   },
-  "engines": {
-    "node": ">=22"
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@vercel/blob": "2.6.1",
+    "pdf-parse": "2.4.5",
+    "playwright": "1.62.0",
+    "steel-sdk": "0.18.0",
+    "zod": "^4.0.0"
   },
   "license": "MIT"
 }
