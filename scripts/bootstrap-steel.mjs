@@ -1,20 +1,26 @@
 import process from 'node:process';
 import readline from 'node:readline/promises';
 import Steel from 'steel-sdk';
+
+const OFFICIAL_MYLOFT_CHROME_WEBSTORE_URL = 'https://chromewebstore.google.com/detail/myloft/hljakogpibfgelmoegmajaeefcnefngd';
 const apiKey = process.env.STEEL_API_KEY;
-const extensionUrl = process.env.MYLOFT_CHROME_WEBSTORE_URL;
+const extensionUrl = process.env.MYLOFT_CHROME_WEBSTORE_URL || OFFICIAL_MYLOFT_CHROME_WEBSTORE_URL;
+
 if (!apiKey) throw new Error('Set STEEL_API_KEY');
-if (!extensionUrl) throw new Error('Set MYLOFT_CHROME_WEBSTORE_URL to the official MyLOFT Chrome Web Store URL');
+
 const client = new Steel({ steelAPIKey: apiKey });
 const extension = await client.extensions.upload({ url: extensionUrl });
 const extensionId = extension.id;
 const session = await client.sessions.create({ persistProfile: true, extensionIds: [extensionId], timeout: 1800000 });
+
 console.log('\nOpen this secure Steel session viewer and log into the official MyLOFT extension yourself:');
 console.log(session.sessionViewerUrl);
 console.log('\nDo not paste your MyLOFT password into this terminal or into ChatGPT.');
+
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 await rl.question('\nAfter MyLOFT is authenticated and you can open one subscribed publisher page, press Enter here...');
 rl.close();
+
 await client.sessions.release(session.id);
 console.log('\nBootstrap complete. Configure these server-side values:');
 console.log(`STEEL_PROFILE_ID=${session.profileId}`);
