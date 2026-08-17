@@ -1,0 +1,19 @@
+{
+  "name": "refrescue-myloft-bridge",
+  "version": "0.1.0",
+  "description": "Read-only bridge between ChatGPT and an already-authenticated MyLOFT Chrome session.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.mjs",
+    "dev": "node --watch src/server.mjs",
+    "chrome": "node scripts/start-chrome.mjs",
+    "token": "node scripts/generate-token.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
